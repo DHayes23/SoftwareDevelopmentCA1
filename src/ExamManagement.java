@@ -146,8 +146,8 @@ private static void addStudentSubMenu() {
             // Add the new student to the list of students.
             studentList.add(newStudent);
             System.out.println(ANSI_BLUE + "Student created successfully!\n" + ANSI_RESET);
-            System.out.println("----------------------------------------------");
-            System.out.println("Student Name: " + newStudent.getStudentName() + "\n" + "Student ID: " + newStudent.getStudentId());
+            System.out.println("----------------------------------------------\n");
+            System.out.println(ANSI_GREEN + "Student Name: " + ANSI_RESET + newStudent.getStudentName() + "\n" + ANSI_GREEN + "Student ID: " + ANSI_RESET + newStudent.getStudentId());
             System.out.println("----------------------------------------------" + "\n");
 
         } catch (StudentException e) {
@@ -162,8 +162,8 @@ private static void addStudentSubMenu() {
         }
 
         for (Student student : studentList) {
-            System.out.println("Student ID: " + student.getStudentId());
-            System.out.println("Student Name: " + student.getStudentName());
+            System.out.println(ANSI_GREEN + "Student ID: " + ANSI_RESET + student.getStudentId());
+            System.out.println(ANSI_GREEN + "Student Name: " + ANSI_RESET + student.getStudentName());
             System.out.println("----------------------------------------------" + "\n");
         }
     }
