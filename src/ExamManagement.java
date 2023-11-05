@@ -13,12 +13,13 @@ public class ExamManagement {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-    //    Initialises Main Menu Scanner
+
+    // Initialises Main Menu Scanner
     private static List<Student> studentList = new ArrayList<>();
     private static List<Exam> exams = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws StudentException {
+    public static void main(String[] args) {
 
 
         System.out.println(ANSI_GREEN + "\n" +
@@ -60,7 +61,7 @@ public class ExamManagement {
                 case 2:
                     // List All Students
                     System.out.println(ANSI_CYAN + "-- List All Students --" + ANSI_RESET);
-                    System.out.println("----------------------------------------------" + "\n");
+                    System.out.println("----------------------------------------------");
                     listAllStudents();
                     break;
                 case 3:
@@ -94,40 +95,41 @@ public class ExamManagement {
         }
     }
 //  Add Student Sub-Menu
-    private static void addStudentSubMenu() throws StudentException {
-        boolean subMenuRunning = true;
-        while (subMenuRunning) {
-            System.out.println("1. Enter student details");
-            System.out.println("2. Return to Main Menu");
+private static void addStudentSubMenu() {
+    boolean subMenuRunning = true;
+    while (subMenuRunning) {
+        System.out.println("1. Enter student details");
+        System.out.println("2. Return to Main Menu");
 
-            System.out.println(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
-            int subMenuChoice = scanner.nextInt();
+        System.out.println(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
+        int subMenuChoice = scanner.nextInt();
 
-            switch (subMenuChoice) {
-                case 1:
-                    // Add Student
-                    System.out.println(ANSI_CYAN + "Enter student details here." + ANSI_RESET);
-                    createStudentFromInput();
-                    subMenuRunning = false; // Exit the submenu
-                    System.out.println(ANSI_YELLOW + "Returning to Main Menu..." + ANSI_RESET);
-                    break;
-                case 2:
-                    System.out.println(ANSI_YELLOW + "Returning to Main Menu..." + ANSI_RESET);
-                    subMenuRunning = false; // Return to Main Menu
-                    break;
-                default:
-                    System.out.println(ANSI_RED + "Invalid option. Please try again." + ANSI_RESET);
-                    break;
-            }
+        switch (subMenuChoice) {
+            case 1:
+                // Add Student
+                System.out.println(ANSI_CYAN + "Enter student details here." + ANSI_RESET);
+                createStudentFromInput(); // We are catching the exception inside this method
+                break;
+            case 2:
+                System.out.println(ANSI_YELLOW + "Returning to Main Menu..." + ANSI_RESET);
+                subMenuRunning = false; // Return to Main Menu
+                break;
+            default:
+                System.out.println(ANSI_RED + "Invalid option. Please try again." + ANSI_RESET);
+                break;
         }
     }
-    public static void createStudentFromInput() throws StudentException {
+}
+    public static void createStudentFromInput() {
         Scanner scanner = new Scanner(System.in);
         int studentId = 0;
         String studentName;
 
         try {
             System.out.println("Please enter the student ID:");
+            if (!scanner.hasNextInt()) {
+                throw new StudentException("Student ID must be a valid integer.");
+            }
             studentId = scanner.nextInt();
             scanner.nextLine(); // consume the newline character
 
@@ -148,14 +150,14 @@ public class ExamManagement {
             System.out.println("Student Name: " + newStudent.getStudentName() + "\n" + "Student ID: " + newStudent.getStudentId());
             System.out.println("----------------------------------------------" + "\n");
 
-        } catch (NumberFormatException e) {
-            throw new StudentException("Student ID must be a valid integer.");
+        } catch (StudentException e) {
+            System.out.println(ANSI_RED + e.getMessage() + ANSI_RESET);
         }
     }
 
     public static void listAllStudents() {
         if (studentList.isEmpty()) {
-            System.out.println(ANSI_RED + "No students found!" + ANSI_RESET);
+            System.out.println(ANSI_RED + "No students found! Returning to Main Menu.\n" + ANSI_RESET);
             return;
         }
 
