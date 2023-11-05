@@ -2,7 +2,7 @@
 import java.util.Scanner;
 public class ExamManagement {
 
-//    Color Palette Options for Terminal Use
+    //    Color Palette Options for Terminal Use
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -12,7 +12,7 @@ public class ExamManagement {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-//    Initialises Main Menu Scanner
+    //    Initialises Main Menu Scanner
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -43,7 +43,7 @@ public class ExamManagement {
             System.out.println("4. Display Exam Results");
             System.out.println("5. Print Results to File");
             System.out.println("6. Exit System");
-            System.out.print(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
 
 
             int mainMenuChoice = scanner.nextInt();
@@ -51,7 +51,7 @@ public class ExamManagement {
                 case 1:
                     // Add student
                     System.out.println(ANSI_CYAN + "-- Add New Student --" + ANSI_RESET);
-                    mainMenuRunning = false;
+                    addStudentSubMenu();
                     break;
                 case 2:
                     // Add exam
@@ -79,6 +79,34 @@ public class ExamManagement {
                     break;
                 default:
                     System.out.println(ANSI_RED + "Invalid option. Returning to Main Menu." + ANSI_RESET);
+                    break;
+            }
+        }
+    }
+//  Add Student Sub-Menu
+    private static void addStudentSubMenu() {
+        boolean subMenuRunning = true;
+        while (subMenuRunning) {
+            System.out.println(ANSI_CYAN + "-- ADD STUDENT SUBMENU --" + ANSI_RESET);
+            System.out.println("1. Enter student details");
+            System.out.println("2. Return to Main Menu");
+
+            System.out.println(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
+            int subMenuChoice = scanner.nextInt();
+
+            switch (subMenuChoice) {
+                case 1:
+                    // Add Student
+                    System.out.println(ANSI_CYAN + "Enter student details here." + ANSI_RESET);
+                    subMenuRunning = false; // Exit the submenu
+                    System.out.println(ANSI_YELLOW + "Returning to Main Menu..." + ANSI_RESET);
+                    break;
+                case 2:
+                    System.out.println(ANSI_YELLOW + "Returning to Main Menu..." + ANSI_RESET);
+                    subMenuRunning = false; // Return to Main Menu
+                    break;
+                default:
+                    System.out.println(ANSI_RED + "Invalid option. Please try again." + ANSI_RESET);
                     break;
             }
         }
