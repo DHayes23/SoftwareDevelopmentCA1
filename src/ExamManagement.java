@@ -96,15 +96,15 @@ public class ExamManagement {
     }
 //  Add Student Sub-Menu
 private static void addStudentSubMenu() {
-    boolean subMenuRunning = true;
-    while (subMenuRunning) {
+    boolean studentSubMenuRunning = true;
+    while (studentSubMenuRunning) {
         System.out.println("1. Enter student details");
         System.out.println("2. Return to Main Menu");
 
         System.out.println(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
-        int subMenuChoice = scanner.nextInt();
+        int studentSubMenuChoice = scanner.nextInt();
 
-        switch (subMenuChoice) {
+        switch (studentSubMenuChoice) {
             case 1:
                 // Add Student
                 System.out.println(ANSI_CYAN + "Enter student details here." + ANSI_RESET);
@@ -112,7 +112,7 @@ private static void addStudentSubMenu() {
                 break;
             case 2:
                 System.out.println(ANSI_YELLOW + "Returning to Main Menu..." + ANSI_RESET);
-                subMenuRunning = false; // Return to Main Menu
+                studentSubMenuRunning = false; // Return to Main Menu
                 break;
             default:
                 System.out.println(ANSI_RED + "Invalid option. Please try again." + ANSI_RESET);
