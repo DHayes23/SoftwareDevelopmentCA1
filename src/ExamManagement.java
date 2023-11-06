@@ -33,68 +33,75 @@ public class ExamManagement {
                 "====================================================================================================\n" +
                 ANSI_RESET);
 
+        System.out.println("Welcome to the Exam Management System.\n");
 
         // Main Menu
-
         //      Enables main menu loop
         boolean mainMenuRunning = true;
         while (mainMenuRunning) {
-            System.out.println(ANSI_CYAN + "--- MAIN MENU ---\n" + ANSI_RESET);
-            System.out.println("Welcome to the Exam Management System.\n");
+            System.out.println(ANSI_GREEN + "--- MAIN MENU ---\n" + ANSI_RESET);
             System.out.println("Please choose one of the following options:\n");
-            System.out.println("1. Add New Student");
-            System.out.println("2. List All Students");
-            System.out.println("3. Add New Exam");
-            System.out.println("4. List All Exams");
-            System.out.println("5. Record Exam Result");
-            System.out.println("6. Display Exam Results");
-            System.out.println("7. Print Results to File");
-            System.out.println("8. Exit System");
-            System.out.println(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "- Students -" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "1." + ANSI_RESET + " Add New Student");
+            System.out.println(ANSI_BLUE + "2." + ANSI_RESET + " List All Students");
+            System.out.println(ANSI_YELLOW + "- Exams -" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "3." + ANSI_RESET + " Add New Exam");
+            System.out.println(ANSI_YELLOW + "4." + ANSI_RESET + " List All Exams");
+            System.out.println(ANSI_YELLOW + "5." + ANSI_RESET + " Record Exam Result");
+            System.out.println(ANSI_YELLOW + "6." + ANSI_RESET + " Display Exam Results");
+            System.out.println(ANSI_YELLOW + "7." + ANSI_RESET + " Print Exam Results to File");
+            System.out.println(ANSI_RED + "- System -" + ANSI_RESET);
+            System.out.println(ANSI_RED + "8." + ANSI_RESET + " Create Test Data");
+            System.out.println(ANSI_RED + "0." + ANSI_RESET + " Exit System");
+            System.out.println(ANSI_GREEN + "\nPlease make your selection:" + ANSI_RESET);
 
 
             int mainMenuChoice = scanner.nextInt();
             switch (mainMenuChoice) {
                 case 1:
                     // Add student
-                    System.out.println(ANSI_CYAN + "-- Add New Student --\n" + ANSI_RESET);
+                    System.out.println(ANSI_BLUE + "-- Add New Student --\n" + ANSI_RESET);
                     addStudentSubMenu();
                     break;
                 case 2:
                     // List All Students
-                    System.out.println(ANSI_CYAN + "-- List All Students --\n" + ANSI_RESET);
+                    System.out.println(ANSI_BLUE + "-- List All Students --\n" + ANSI_RESET);
                     System.out.println("----------------------------------------------\n");
                     listAllStudents();
                     break;
                 case 3:
                     // Add exam
-                    System.out.println(ANSI_CYAN + "-- Add New Exam --\n" + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW + "-- Add New Exam --\n" + ANSI_RESET);
                     addExamSubMenu();
                     break;
                 case 4:
                     // List All Exams
-                    System.out.println(ANSI_CYAN + "-- List All Exams --\n" + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW + "-- List All Exams --\n" + ANSI_RESET);
                     System.out.println("----------------------------------------------\n");
 
                     listAllExams();
                     break;
                 case 5:
                     // Record exam result
-                    System.out.println(ANSI_CYAN + "-- Record Exam Result --\n" + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW + "-- Record Exam Result --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
                 case 6:
                     // Display exam results
-                    System.out.println(ANSI_CYAN + "-- Display Exam Result --\n" + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW + "-- Display Exam Result --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
                 case 7:
                     // Print results to file
-                    System.out.println(ANSI_CYAN + "-- Print Exam Results to File --\n" + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW + "-- Print Exam Results to File --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
                 case 8:
-                    System.out.println(ANSI_CYAN + "-- Exit System --\n" + ANSI_RESET);
+                    System.out.println(ANSI_RED + "-- Create Test Data --\n" + ANSI_RESET);
+                    mainMenuRunning = false;
+                    break;
+                case 0:
+                    System.out.println(ANSI_RED + "-- Exit System --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
                 default:
@@ -116,7 +123,6 @@ private static void addStudentSubMenu() {
         switch (studentSubMenuChoice) {
             case 1:
                 // Add Student
-                System.out.println(ANSI_CYAN + "Enter student details here.\n" + ANSI_RESET);
                 createStudentFromInput();
                 break;
             case 2:
@@ -145,7 +151,7 @@ private static void addStudentSubMenu() {
             switch (examSubMenuChoice) {
                 case 1:
                     // Add Essay Exam
-                    System.out.println(ANSI_CYAN + "Adding Essay Exam...\n" + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW + "Adding Essay Exam...\n" + ANSI_RESET);
                     createEssayFromInput();
                     break;
                 case 2:
@@ -223,8 +229,8 @@ private static void addStudentSubMenu() {
         }
 
         for (Student student : studentList) {
-            System.out.println(ANSI_GREEN + "Student ID: " + ANSI_RESET + student.getStudentId());
-            System.out.println(ANSI_GREEN + "Student Name: " + ANSI_RESET + student.getStudentName());
+            System.out.println(ANSI_BLUE + "Student ID: " + ANSI_RESET + student.getStudentId());
+            System.out.println(ANSI_BLUE + "Student Name: " + ANSI_RESET + student.getStudentName());
             System.out.println("----------------------------------------------" + "\n");
         }
     }
