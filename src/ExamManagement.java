@@ -53,7 +53,7 @@ public class ExamManagement {
             System.out.println(ANSI_YELLOW + "6." + ANSI_RESET + " Display a Student's Exam Results");
             System.out.println(ANSI_YELLOW + "7." + ANSI_RESET + " Display/Print All Exam Results");
             System.out.println(ANSI_RED + "- System -" + ANSI_RESET);
-            System.out.println(ANSI_RED + "8." + ANSI_RESET + " Create Test Data");
+            System.out.println(ANSI_RED + "8." + ANSI_RESET + " Create Test Data (Should be used only once, and before adding other users)");
             System.out.println(ANSI_RED + "0." + ANSI_RESET + " Exit System");
             System.out.println(ANSI_GREEN + "\nPlease make your selection:" + ANSI_RESET);
 
