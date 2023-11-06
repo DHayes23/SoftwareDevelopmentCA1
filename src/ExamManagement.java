@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 public class ExamManagement {
 
     //    Color Palette Options for Terminal Use
@@ -51,10 +54,9 @@ public class ExamManagement {
             System.out.println(ANSI_YELLOW + "4." + ANSI_RESET + " List All Exams");
             System.out.println(ANSI_YELLOW + "5." + ANSI_RESET + " Record Exam Result");
             System.out.println(ANSI_YELLOW + "6." + ANSI_RESET + " Display a Student's Exam Results");
-            System.out.println(ANSI_YELLOW + "7." + ANSI_RESET + " Display All Exam Results");
-            System.out.println(ANSI_YELLOW + "8." + ANSI_RESET + " Print Exam Results to File");
+            System.out.println(ANSI_YELLOW + "7." + ANSI_RESET + " Display/Print All Exam Results");
             System.out.println(ANSI_RED + "- System -" + ANSI_RESET);
-            System.out.println(ANSI_RED + "9." + ANSI_RESET + " Create Test Data");
+            System.out.println(ANSI_RED + "8." + ANSI_RESET + " Create Test Data");
             System.out.println(ANSI_RED + "0." + ANSI_RESET + " Exit System");
             System.out.println(ANSI_GREEN + "\nPlease make your selection:" + ANSI_RESET);
 
@@ -100,11 +102,6 @@ public class ExamManagement {
                     printAllStudentsExamsDetails();
                     break;
                 case 8:
-                    // Print results to file
-                    System.out.println(ANSI_YELLOW + "-- Print Exam Results to File --\n" + ANSI_RESET);
-                    mainMenuRunning = false;
-                    break;
-                case 9:
                     System.out.println(ANSI_RED + "-- Create Test Data --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
@@ -577,6 +574,48 @@ private static void addStudentSubMenu() {
                 }
                 System.out.println("===============================================================================================================================\n");
             }
+        }
+
+        // Ask the user if they want to print the data to a file
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Do you want to print this data to a file? (y/n)");
+        String response = scanner.nextLine();
+
+        if ("y".equalsIgnoreCase(response)) {
+            // Prompt for the file name
+            System.out.println("Enter the filename to save to (e.g., exams.txt):");
+            String filename = scanner.nextLine();
+
+            // Call the method to write data to a file
+            writeDataToFile(filename);
+        }
+    }
+    private static void writeDataToFile(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            // Write the same data to the file as was printed to the screen
+            for (Student student : studentList) {
+                if (!student.getExamsTaken().isEmpty()) {
+                    writer.write(String.format("Student ID: %-10d   Name: %-30s%n", student.getStudentId(), student.getStudentName()));
+                    writer.write("-------------------------------------------------------------------------------------------------------------------------------\n");
+
+                    writer.write("Exam ID            Subject                   Duration                  Exam Type                 Score\n");
+
+                    for (Exam exam : student.getExamsTaken()) {
+                        String examType = exam instanceof MultipleChoice ? "Multiple Choice" : "Essay";
+                        int score = exam.calculateScore();
+
+                        writer.write(String.format("%-13d      %-20s      %-20s      %-20s      %-15d     %n",
+                                exam.getExamId(),
+                                exam.getSubject(),
+                                exam.getDuration() + " minutes",
+                                examType,
+                                exam.calculateScore()));
+                    }
+                    writer.write("===============================================================================================================================\n");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
         }
     }
 }
