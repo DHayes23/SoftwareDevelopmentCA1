@@ -17,7 +17,7 @@ public class ExamManagement {
 
     // Initialises Main Menu Scanner
     private static List<Student> studentList = new ArrayList<>();
-    private static List<Exam> exams = new ArrayList<>();
+    private static List<Exam> examList = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -45,10 +45,11 @@ public class ExamManagement {
             System.out.println("1. Add New Student");
             System.out.println("2. List All Students");
             System.out.println("3. Add New Exam");
-            System.out.println("4. Record Exam Result");
-            System.out.println("5. Display Exam Results");
-            System.out.println("6. Print Results to File");
-            System.out.println("7. Exit System");
+            System.out.println("4. List All Exams");
+            System.out.println("5. Record Exam Result");
+            System.out.println("6. Display Exam Results");
+            System.out.println("7. Print Results to File");
+            System.out.println("8. Exit System");
             System.out.println(ANSI_GREEN + "Please make your selection:" + ANSI_RESET);
 
 
@@ -56,41 +57,48 @@ public class ExamManagement {
             switch (mainMenuChoice) {
                 case 1:
                     // Add student
-                    System.out.println(ANSI_CYAN + "-- Add New Student --" + ANSI_RESET);
+                    System.out.println(ANSI_CYAN + "-- Add New Student --\n" + ANSI_RESET);
                     addStudentSubMenu();
                     break;
                 case 2:
                     // List All Students
-                    System.out.println(ANSI_CYAN + "-- List All Students --" + ANSI_RESET);
+                    System.out.println(ANSI_CYAN + "-- List All Students --\n" + ANSI_RESET);
                     System.out.println("----------------------------------------------");
                     listAllStudents();
                     break;
                 case 3:
                     // Add exam
-                    System.out.println(ANSI_CYAN + "-- Add New Exam --" + ANSI_RESET);
+                    System.out.println(ANSI_CYAN + "-- Add New Exam --\n" + ANSI_RESET);
                     addExamSubMenu();
                     break;
                 case 4:
-                    // Record exam result
-                    System.out.println(ANSI_CYAN + "-- Record Exam Result --" + ANSI_RESET);
-                    mainMenuRunning = false;
+                    // List All Exams
+                    System.out.println(ANSI_CYAN + "-- List All Exams --\n" + ANSI_RESET);
+                    System.out.println("----------------------------------------------\n");
+
+                    listAllExams();
                     break;
                 case 5:
-                    // Display exam results
-                    System.out.println(ANSI_CYAN + "-- Display Exam Result --" + ANSI_RESET);
+                    // Record exam result
+                    System.out.println(ANSI_CYAN + "-- Record Exam Result --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
                 case 6:
-                    // Print results to file
-                    System.out.println(ANSI_CYAN + "-- Print Exam Results to File --" + ANSI_RESET);
+                    // Display exam results
+                    System.out.println(ANSI_CYAN + "-- Display Exam Result --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
                 case 7:
-                    System.out.println(ANSI_CYAN + "-- Exit System --" + ANSI_RESET);
+                    // Print results to file
+                    System.out.println(ANSI_CYAN + "-- Print Exam Results to File --\n" + ANSI_RESET);
+                    mainMenuRunning = false;
+                    break;
+                case 8:
+                    System.out.println(ANSI_CYAN + "-- Exit System --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
                 default:
-                    System.out.println(ANSI_RED + "Invalid option. Returning to Main Menu." + ANSI_RESET);
+                    System.out.println(ANSI_RED + "Invalid option. Returning to Main Menu.\n" + ANSI_RESET);
                     break;
             }
         }
@@ -277,8 +285,9 @@ private static void addStudentSubMenu() {
 
             // Create the Essay object
             Essay newEssay = new Essay(examId, subject, duration, essayAnswer, grammar, content, wordLimit);
-
-            System.out.println(ANSI_BLUE + "Essay created successfully!\n" + ANSI_RESET);
+            // Create the Student object
+            examList.add(newEssay);
+            System.out.println(ANSI_BLUE + "Essay Exam created successfully!\n" + ANSI_RESET);
             newEssay.displayExamDetails();
 
         } catch (ExamException e) {
@@ -344,6 +353,8 @@ private static void addStudentSubMenu() {
             // Create the MultipleChoice object
             MultipleChoice newMultipleChoice = new MultipleChoice(examId, subject, duration, noQuestions, correctAnswers);
 
+            // Add the new student to the list of students.
+            examList.add(newMultipleChoice);
             System.out.println(ANSI_BLUE + "Multiple Choice Exam created successfully!\n" + ANSI_RESET);
             newMultipleChoice.displayExamDetails();
 
@@ -352,6 +363,17 @@ private static void addStudentSubMenu() {
         } catch (InputMismatchException e) {
             System.err.println("Invalid input. Please ensure you enter the correct data types.");
             scanner.nextLine();
+        }
+    }
+
+    public static void listAllExams() {
+        if (examList.isEmpty()) {
+            System.out.println(ANSI_RED + "No exams found! Returning to Main Menu.\n" + ANSI_RESET);
+            return;
+        }
+
+        for (Exam exam : examList) {
+            exam.displayExamDetails();
         }
     }
 

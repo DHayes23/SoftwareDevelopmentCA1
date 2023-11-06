@@ -25,14 +25,13 @@ public class MultipleChoice extends Exam implements Scorable{
     }
 
     public void displayExamDetails() {
-        System.out.println("----------------------------------------------\n");
-        System.out.println("Exam ID: " + getExamId());
-        System.out.println("Subject: " + getSubject());
-        System.out.println("Duration: " + getDuration());
-        System.out.println("Number of Questions: " + getNoQuestions());
+        System.out.println(ANSI_GREEN + "Exam ID: " + ANSI_RESET + getExamId());
+        System.out.println(ANSI_GREEN + "Subject: " + ANSI_RESET + getSubject());
+        System.out.println(ANSI_GREEN + "Duration: " + ANSI_RESET + getDuration());
+        System.out.println(ANSI_GREEN + "Number of Questions: " + ANSI_RESET + getNoQuestions());
 //        This part of the system brief doesn't make sense. This shouldn't be in the Multiple Choice class.
-        System.out.println("Correct Answers: " + getCorrectAnswers());
-        System.out.println("Score: " + calculateScore() + "%");
+        System.out.println(ANSI_GREEN + "Correct Answers: " + ANSI_RESET + getCorrectAnswers());
+        System.out.println(ANSI_GREEN + "Calculated Score: " + ANSI_RESET + calculateScore() + "%");
         System.out.println("----------------------------------------------\n");
     }
 

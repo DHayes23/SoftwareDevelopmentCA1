@@ -40,7 +40,6 @@ public class Essay extends Exam implements Scorable {
     }
 
     public void displayExamDetails() {
-        System.out.println("----------------------------------------------\n");
         System.out.println(ANSI_GREEN + "Exam ID: " + ANSI_RESET + getExamId());
         System.out.println(ANSI_GREEN + "Subject: " + ANSI_RESET + getSubject());
         System.out.println(ANSI_GREEN + "Duration: " + ANSI_RESET + getDuration());

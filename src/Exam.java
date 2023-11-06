@@ -46,4 +46,7 @@ public abstract class Exam {
         }
         this.duration = duration;
     }
+
+    public void displayExamDetails() {
+    }
 }
