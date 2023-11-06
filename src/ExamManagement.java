@@ -18,6 +18,8 @@ public class ExamManagement {
     // Initialises Main Menu Scanner
     private static List<Student> studentList = new ArrayList<>();
     private static List<Exam> examList = new ArrayList<>();
+
+    private static List<ExamResult> examResultsList = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -84,12 +86,12 @@ public class ExamManagement {
                 case 5:
                     // Record exam result
                     System.out.println(ANSI_YELLOW + "-- Record Exam Result --\n" + ANSI_RESET);
-                    mainMenuRunning = false;
+                    recordExamResultFromInput();
                     break;
                 case 6:
                     // Display exam results
                     System.out.println(ANSI_YELLOW + "-- Display Exam Result --\n" + ANSI_RESET);
-                    mainMenuRunning = false;
+                    printExamsForStudent();
                     break;
                 case 7:
                     // Print results to file
@@ -437,6 +439,92 @@ private static void addStudentSubMenu() {
 
         for (Exam exam : examList) {
             exam.displayExamDetails();
+        }
+    }
+
+    public static void recordExamResultFromInput() {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.println(ANSI_GREEN + "Please enter the student ID:" + ANSI_RESET);
+            int studentId = scanner.nextInt();
+            scanner.nextLine();
+            Student student = getStudentById(studentId);
+
+            System.out.println(ANSI_GREEN + "Please enter the exam ID:" + ANSI_RESET);
+            int examId = scanner.nextInt();
+            scanner.nextLine();
+            Exam exam = getExamById(examId);
+
+            int score = exam.calculateScore();
+
+            // Create the ExamResult object
+            ExamResult newExamResult = new ExamResult(student, exam, score);
+
+            // Add the newExamResult to examResultsList
+             examResultsList.add(newExamResult);
+
+            // Add the exam to the student's examsTaken list
+            student.addExam(exam);
+
+            System.out.println(ANSI_YELLOW + "Exam Result created successfully!\n" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "Student ID: " + ANSI_RESET + newExamResult.getStudent().getStudentId());
+            System.out.println(ANSI_GREEN + "Exam ID: " + ANSI_RESET  + newExamResult.getExam().getExamId());
+            System.out.println(ANSI_GREEN + "Score: " + ANSI_RESET  + newExamResult.getScore() + "%\n");
+
+        } catch (InputMismatchException ime) {
+            System.err.println("Invalid input. Please ensure you enter the correct data types.");
+            scanner.nextLine();
+        } catch (StudentException | ExamException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+
+    // Finds a Student by their ID.
+    public static Student getStudentById(int studentId) throws StudentException {
+        for (Student student : studentList) {
+            if (student.getStudentId() == studentId) {
+                return student;
+            }
+        }
+        // Throws an exception if matching student not found.
+        throw new StudentException("Student with ID " + studentId + " not found.");
+    }
+
+    // Finds an Exam by its ID.
+    public static Exam getExamById(int examId) throws ExamException {
+        for (Exam exam : examList) {
+            if (exam.getExamId() == examId) {
+                return exam;
+            }
+        }
+        // Throws an exception if matching exam not found.
+        throw new ExamException("Exam with ID " + examId + " not found.");
+    }
+
+    public static void printExamsForStudent() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the student ID:");
+        int studentId = scanner.nextInt();
+        scanner.nextLine(); // Consume the rest of the line
+
+        try {
+            Student student = getStudentById(studentId);
+            printExamsTakenByStudent(student);
+        } catch (StudentException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void printExamsTakenByStudent(Student student) {
+        System.out.println("\nExams taken by student " + student.getStudentName() + " (ID: " + student.getStudentId() + "):\n");
+        if (student.getExamsTaken().isEmpty()) {
+            System.out.println(ANSI_RED + "This student has not taken any exams yet." + ANSI_RESET);
+        } else {
+            for (Exam exam : student.getExamsTaken()) {
+                exam.displayExamDetails();
+            }
         }
     }
 }

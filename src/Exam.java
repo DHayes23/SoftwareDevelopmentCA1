@@ -49,4 +49,7 @@ public abstract class Exam {
 
     public void displayExamDetails() {
     }
+
+    public abstract int calculateScore();
+
 }
