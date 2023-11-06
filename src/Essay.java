@@ -40,14 +40,16 @@ public class Essay extends Exam implements Scorable {
     }
 
     public void displayExamDetails() {
-        System.out.println("Exam ID: " + getExamId());
-        System.out.println("Subject: " + getSubject());
-        System.out.println("Duration: " + getDuration());
-        System.out.println("Essay Answer: " + getEssayAnswer());
-        System.out.println("Grammar Score: " + getGrammar());
-        System.out.println("Content Score: " + getContent());
-        System.out.println("Word Limit: " + getWordLimit());
-        System.out.println("Calculated Score: " + calculateScore());
+        System.out.println("----------------------------------------------\n");
+        System.out.println(ANSI_GREEN + "Exam ID: " + ANSI_RESET + getExamId());
+        System.out.println(ANSI_GREEN + "Subject: " + ANSI_RESET + getSubject());
+        System.out.println(ANSI_GREEN + "Duration: " + ANSI_RESET + getDuration());
+        System.out.println(ANSI_GREEN + "Essay Answer: " + ANSI_RESET + getEssayAnswer());
+        System.out.println(ANSI_GREEN + "Grammar Score: " + ANSI_RESET + getGrammar());
+        System.out.println(ANSI_GREEN + "Content Score: " + ANSI_RESET + getContent());
+        System.out.println(ANSI_GREEN + "Word Limit: " + ANSI_RESET + getWordLimit());
+        System.out.println(ANSI_GREEN + "Calculated Score: " + ANSI_RESET + calculateScore());
+        System.out.println("----------------------------------------------\n");
     }
 
     // Getters
