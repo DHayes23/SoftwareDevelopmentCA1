@@ -171,16 +171,21 @@ private static void addStudentSubMenu() {
 
         try {
             System.out.println("Please enter the student ID:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 throw new StudentException("Student ID must be a valid integer.");
             }
             studentId = scanner.nextInt();
-            scanner.nextLine(); // consume the newline character
+            scanner.nextLine();
+            // Throws exception if user enters duplicate examId.
+            if (doesStudentExist(studentId)) {
+                throw new StudentException("A student with this ID already exists.");
+            }
 
             System.out.println("Please enter the student name (2-30 characters):");
             studentName = scanner.nextLine();
 
-            // Validate student name
+            // Throws exception if user enters an exam duration outside accepted limits.
             if (studentName == null || studentName.trim().isEmpty() || studentName.length() < 2 || studentName.length() > 30) {
                 throw new StudentException("Student name must be between 2 and 30 characters long.");
             }
@@ -189,6 +194,7 @@ private static void addStudentSubMenu() {
             Student newStudent = new Student(studentId, studentName);
             // Add the new student to the list of students.
             studentList.add(newStudent);
+            // Prints success message.
             System.out.println(ANSI_BLUE + "Student created successfully!\n" + ANSI_RESET);
             System.out.println("----------------------------------------------" + "\n");
             System.out.println(ANSI_GREEN + "Student Name: " + ANSI_RESET + newStudent.getStudentName() + "\n" + ANSI_GREEN + "Student ID: " + ANSI_RESET + newStudent.getStudentId());
@@ -199,6 +205,17 @@ private static void addStudentSubMenu() {
         }
     }
 
+    // Checks new student ids against existing to prevent duplicates.
+    private static boolean doesStudentExist(int studentId) {
+        for (Student student : studentList) {
+            if (student.getStudentId() == studentId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Prints all existing students to the console.
     public static void listAllStudents() {
         if (studentList.isEmpty()) {
             System.out.println(ANSI_RED + "No students found! Returning to Main Menu.\n" + ANSI_RESET);
@@ -224,24 +241,32 @@ private static void addStudentSubMenu() {
 
         try {
             System.out.println("Please enter the exam ID:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 throw new ExamException("Exam ID must be a valid integer.");
             }
             examId = scanner.nextInt();
             scanner.nextLine();
+            // Throws exception if user enters duplicate examId.
+            if (doesExamExist(examId)) {
+                throw new ExamException("An exam with this ID already exists.");
+            }
 
             System.out.println("Please enter the subject:");
             subject = scanner.nextLine();
+            // Throws exception if user enters a blank subject.
             if (subject == null || subject.trim().isEmpty()) {
                 throw new ExamException("Subject cannot be empty.");
             }
 
             System.out.println("Please enter the duration of the exam in minutes:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 throw new ExamException("Duration must be an integer value for minutes.");
             }
             duration = scanner.nextInt();
+            // Throws exception if user enters an exam duration outside accepted limits.
             if (duration < 30 || duration > 180) {
                 throw new ExamException("Exam duration must be between 30 and 180 minutes.");
             }
@@ -249,44 +274,52 @@ private static void addStudentSubMenu() {
 
             System.out.println("Please enter the essay answer:");
             essayAnswer = scanner.nextLine();
+            // Throws exception if user enters a blank essay answer.
             if (essayAnswer == null || essayAnswer.trim().isEmpty()) {
                 throw new ExamException("Essay answer cannot be empty.");
             }
 
             System.out.println("Please enter the grammar score out of 100:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 throw new ExamException("Grammar score must be an integer.");
             }
             grammar = scanner.nextInt();
+            // Throws exception if user enters a grammar score outside accepted limits.
             if (grammar < 0 || grammar > 100) {
                 throw new ExamException("Grammar score must be between 0 and 100.");
             }
 
             System.out.println("Please enter the content score out of 100:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 throw new ExamException("Content score must be an integer.");
             }
             content = scanner.nextInt();
+            // Throws exception if user enters a content score outside accepted limits.
             if (content < 0 || content > 100) {
                 throw new ExamException("Content score must be between 0 and 100.");
             }
 
             System.out.println("Please enter the word limit (between 500 and 10000):");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 throw new ExamException("Word limit must be an integer.");
             }
             wordLimit = scanner.nextInt();
+            // Throws exception if user enters a word limit outside accepted limits.
             if (wordLimit < 500 || wordLimit > 10000) {
                 throw new ExamException("Word limit must be between 500 and 10000.");
             }
 
             // Create the Essay object
             Essay newEssay = new Essay(examId, subject, duration, essayAnswer, grammar, content, wordLimit);
-            // Create the Student object
+            // Add the new essay object to the list of exams.
             examList.add(newEssay);
+            // Prints success message.
             System.out.println(ANSI_BLUE + "Essay Exam created successfully!\n" + ANSI_RESET);
             newEssay.displayExamDetails();
 
@@ -311,40 +344,53 @@ private static void addStudentSubMenu() {
             if (!scanner.hasNextInt()) {
                 throw new ExamException("Exam ID must be a valid integer.");
             }
+
             examId = scanner.nextInt();
             scanner.nextLine();
+            // Throws exception if user enters duplicate examId
+            if (doesExamExist(examId)) {
+                throw new ExamException("An exam with this ID already exists.");
+            }
 
             System.out.println("Please enter the subject:");
             subject = scanner.nextLine();
+            // Throws exception if user enters a blank subject.
             if (subject == null || subject.trim().isEmpty()) {
                 throw new ExamException("Subject cannot be empty.");
             }
 
             System.out.println("Please enter the duration of the exam in minutes:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 throw new ExamException("Duration must be an integer value for minutes.");
             }
             duration = scanner.nextInt();
+            // Throws exception if user enters a duration outside accepted limits.
             if (duration < 30 || duration > 180) {
                 throw new ExamException("Exam duration must be between 30 and 180 minutes.");
             }
 
             System.out.println("Please enter the number of questions:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 throw new ExamException("Number of questions must be an integer.");
             }
             noQuestions = scanner.nextInt();
+            // Throws exception if user enters a number of questions outside accepted limits.
             if (noQuestions < 10 || noQuestions > 50) {
                 throw new ExamException("Number of questions must be between 10 and 50.");
             }
 
             System.out.println("Please enter the number of correct answers:");
+            // Throws exception if user enters a non-integer.
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 throw new ExamException("Number of correct answers must be an integer.");
             }
+            // Throws exception if user enters less than 0 correct answers or more correct answers than there are
+            // questions.
             correctAnswers = scanner.nextInt();
             if (correctAnswers < 0 || correctAnswers > noQuestions) {
                 throw new ExamException("Correct answers must be between 0 and the number of questions.");
@@ -353,7 +399,7 @@ private static void addStudentSubMenu() {
             // Create the MultipleChoice object
             MultipleChoice newMultipleChoice = new MultipleChoice(examId, subject, duration, noQuestions, correctAnswers);
 
-            // Add the new student to the list of students.
+            // Add the new multiple choice object to the list of exams.
             examList.add(newMultipleChoice);
             System.out.println(ANSI_BLUE + "Multiple Choice Exam created successfully!\n" + ANSI_RESET);
             newMultipleChoice.displayExamDetails();
@@ -365,7 +411,17 @@ private static void addStudentSubMenu() {
             scanner.nextLine();
         }
     }
+    // Checks new exam ids against existing to prevent duplicates.
+    private static boolean doesExamExist(int examId) {
+        for (Exam exam : examList) {
+            if (exam.getExamId() == examId) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    // Prints all existing exams to the console.
     public static void listAllExams() {
         if (examList.isEmpty()) {
             System.out.println(ANSI_RED + "No exams found! Returning to Main Menu.\n" + ANSI_RESET);
