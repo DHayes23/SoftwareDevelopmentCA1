@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -103,7 +100,8 @@ public class ExamManagement {
                     break;
                 case 8:
                     System.out.println(ANSI_RED + "-- Create Test Data --\n" + ANSI_RESET);
-                    mainMenuRunning = false;
+                    System.out.println(ANSI_RED + "Test Data (Students and Exams) created.\n**Note that Exam Results must still be recorded, linking a student to an exam.**\n" + ANSI_RESET);
+                    createSampleData();
                     break;
                 case 0:
                     System.out.println(ANSI_RED + "-- Exit System --\n" + ANSI_RESET);
@@ -617,5 +615,77 @@ private static void addStudentSubMenu() {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file.");
         }
+    }
+
+    private static void createSampleData(){
+        // Create an array with all test student objects
+        Student[] sampleStudents = new Student[0];
+        try {
+            sampleStudents = new Student[] {
+                    new Student(1, "Roald Amundsen"),
+                    new Student(2, "Robert Falcon Scott"),
+                    new Student(3, "Ernest Shackleton"),
+                    new Student(4, "Richard E. Byrd"),
+                    new Student(5, "Fridtjof Nansen"),
+                    new Student(6, "Sir John Franklin"),
+                    new Student(7, "Douglas Mawson"),
+                    new Student(8, "Matthew Henson"),
+                    new Student(9, "Valerian Albanov"),
+                    new Student(10, "Henry Hudson")
+            };
+        } catch (StudentException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Add all students to the studentList
+        studentList.addAll(Arrays.asList(sampleStudents));
+
+        List<Exam> sampleExams = new ArrayList<>();
+
+        try {
+            // Create MultipleChoice exams
+            MultipleChoice mc1 = new MultipleChoice(101, "Geography", 30, 20, 15);
+            MultipleChoice mc2 = new MultipleChoice(102, "Mathematics", 45, 35, 33);
+            MultipleChoice mc3 = new MultipleChoice(103, "English", 50, 40, 23);
+            MultipleChoice mc4 = new MultipleChoice(104, "Japanese", 60, 20, 18);
+            MultipleChoice mc5 = new MultipleChoice(105, "French", 30, 25, 13);
+            MultipleChoice mc6 = new MultipleChoice(106, "Physics", 90, 20, 16);
+            MultipleChoice mc7 = new MultipleChoice(107, "German", 120, 35, 28);
+            MultipleChoice mc8 = new MultipleChoice(108, "Biology", 45, 25, 20);
+            MultipleChoice mc9 = new MultipleChoice(109, "Irish", 60, 30, 19);
+            MultipleChoice mc10 = new MultipleChoice(110, "History", 45, 30, 8);
+
+            // Create Essay exams
+            Essay essay1 = new Essay(201, "History", 60, "The impact of World War II...", 80, 90, 1000);
+            Essay essay2 = new Essay(202, "Literature", 90, "Analysis of Shakespeare's works...", 40, 55, 3000);
+            Essay essay3 = new Essay(202, "Art", 90, "The life of Da'Vinci...", 85, 95, 1500);
+            Essay essay4 = new Essay(202, "Architecture", 90, "Gaudi: Genius or Madman...", 55, 60, 2500);
+            Essay essay5 = new Essay(202, "Medicine", 90, "Bedside Manner 101...", 55, 35, 1500);
+
+            // Add MultipleChoice exams to sampleExams list
+            sampleExams.add(mc1);
+            sampleExams.add(mc2);
+            sampleExams.add(mc3);
+            sampleExams.add(mc4);
+            sampleExams.add(mc5);
+            sampleExams.add(mc6);
+            sampleExams.add(mc7);
+            sampleExams.add(mc8);
+            sampleExams.add(mc9);
+            sampleExams.add(mc10);
+
+            // Add MultipleChoice exams to sampleExams list
+
+            sampleExams.add(essay1);
+            sampleExams.add(essay2);
+            sampleExams.add(essay3);
+            sampleExams.add(essay4);
+            sampleExams.add(essay5);
+
+        } catch (ExamException e) {
+            throw new RuntimeException(e);
+        }
+
+        examList.addAll(sampleExams);
     }
 }
