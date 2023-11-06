@@ -48,7 +48,7 @@ public class Essay extends Exam implements Scorable {
         System.out.println(ANSI_GREEN + "Grammar Score: " + ANSI_RESET + getGrammar());
         System.out.println(ANSI_GREEN + "Content Score: " + ANSI_RESET + getContent());
         System.out.println(ANSI_GREEN + "Word Limit: " + ANSI_RESET + getWordLimit());
-        System.out.println(ANSI_GREEN + "Calculated Score: " + ANSI_RESET + calculateScore());
+        System.out.println(ANSI_GREEN + "Calculated Score: " + ANSI_RESET + calculateScore()+ "%");
         System.out.println("----------------------------------------------\n");
     }
 
