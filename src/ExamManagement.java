@@ -50,10 +50,11 @@ public class ExamManagement {
             System.out.println(ANSI_YELLOW + "3." + ANSI_RESET + " Add New Exam");
             System.out.println(ANSI_YELLOW + "4." + ANSI_RESET + " List All Exams");
             System.out.println(ANSI_YELLOW + "5." + ANSI_RESET + " Record Exam Result");
-            System.out.println(ANSI_YELLOW + "6." + ANSI_RESET + " Display Exam Results");
-            System.out.println(ANSI_YELLOW + "7." + ANSI_RESET + " Print Exam Results to File");
+            System.out.println(ANSI_YELLOW + "6." + ANSI_RESET + " Display a Student's Exam Results");
+            System.out.println(ANSI_YELLOW + "7." + ANSI_RESET + " Display All Exam Results");
+            System.out.println(ANSI_YELLOW + "8." + ANSI_RESET + " Print Exam Results to File");
             System.out.println(ANSI_RED + "- System -" + ANSI_RESET);
-            System.out.println(ANSI_RED + "8." + ANSI_RESET + " Create Test Data");
+            System.out.println(ANSI_RED + "9." + ANSI_RESET + " Create Test Data");
             System.out.println(ANSI_RED + "0." + ANSI_RESET + " Exit System");
             System.out.println(ANSI_GREEN + "\nPlease make your selection:" + ANSI_RESET);
 
@@ -89,16 +90,21 @@ public class ExamManagement {
                     recordExamResultFromInput();
                     break;
                 case 6:
-                    // Display exam results
-                    System.out.println(ANSI_YELLOW + "-- Display Exam Result --\n" + ANSI_RESET);
+                    // Display exam results for student
+                    System.out.println(ANSI_YELLOW + "-- Display a Student's Exam Results --\n" + ANSI_RESET);
                     printExamsForStudent();
                     break;
                 case 7:
+                    // Display all exam results
+                    System.out.println(ANSI_YELLOW + "-- Display All Exam Results --\n" + ANSI_RESET);
+                    printAllStudentsExamsDetails();
+                    break;
+                case 8:
                     // Print results to file
                     System.out.println(ANSI_YELLOW + "-- Print Exam Results to File --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
-                case 8:
+                case 9:
                     System.out.println(ANSI_RED + "-- Create Test Data --\n" + ANSI_RESET);
                     mainMenuRunning = false;
                     break;
@@ -409,7 +415,7 @@ private static void addStudentSubMenu() {
 
             // Add the new multiple choice object to the list of exams.
             examList.add(newMultipleChoice);
-            System.out.println(ANSI_BLUE + "Multiple Choice Exam created successfully!\n" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "Multiple Choice Exam created successfully!\n" + ANSI_RESET);
             newMultipleChoice.displayExamDetails();
 
         } catch (ExamException e) {
@@ -503,6 +509,7 @@ private static void addStudentSubMenu() {
         throw new ExamException("Exam with ID " + examId + " not found.");
     }
 
+    // Asks user for student ID; if found prints the exams they've taken.
     public static void printExamsForStudent() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the student ID:");
@@ -517,6 +524,7 @@ private static void addStudentSubMenu() {
         }
     }
 
+    // Prints details about each exam an individual student has taken.
     public static void printExamsTakenByStudent(Student student) {
         System.out.println("\nExams taken by student " + student.getStudentName() + " (ID: " + student.getStudentId() + "):\n");
         if (student.getExamsTaken().isEmpty()) {
@@ -524,6 +532,50 @@ private static void addStudentSubMenu() {
         } else {
             for (Exam exam : student.getExamsTaken()) {
                 exam.displayExamDetails();
+            }
+        }
+    }
+
+    public static void printAllStudentsExamsDetails() {
+        // Check if there is any exam data to display
+        boolean dataExists = false;
+        for (Student student : studentList) {
+            if (!student.getExamsTaken().isEmpty()) {
+                dataExists = true;
+                break; // Break the loop as we have found data
+            }
+        }
+
+        // If no exams are found, print a message and return
+        if (!dataExists) {
+            System.out.println(ANSI_RED + "Unable to find any exams for any students! Returning to Main Menu.\n" + ANSI_RESET);
+            return; // Exit the method early
+        }
+
+        // Iterate over all students and print their exam details
+        for (Student student : studentList) {
+            // Only proceed if the student has taken exams
+            if (!student.getExamsTaken().isEmpty()) {
+                // Print the student's details
+                System.out.printf("Student ID: %-10d   Name: %-30s\n", student.getStudentId(), student.getStudentName());
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+
+                // Header for exams
+                System.out.println("Exam ID            Subject                   Duration                  Exam Type                 Score\n");
+
+                // Iterate over each exam the student has taken
+                for (Exam exam : student.getExamsTaken()) {
+                    String examType = exam instanceof MultipleChoice ? "Multiple Choice" : "Essay";
+                    int score = exam.calculateScore();
+
+                    System.out.printf("%-13d      %-20s      %-20s      %-20s      %-15d     \n",
+                            exam.getExamId(),
+                            exam.getSubject(),
+                            exam.getDuration() + " minutes",
+                            examType,
+                            exam.calculateScore());
+                }
+                System.out.println("===============================================================================================================================\n");
             }
         }
     }
