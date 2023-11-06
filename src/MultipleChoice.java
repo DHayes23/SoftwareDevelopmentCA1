@@ -29,15 +29,14 @@ public class MultipleChoice extends Exam implements Scorable{
         System.out.println(ANSI_GREEN + "Subject: " + ANSI_RESET + getSubject());
         System.out.println(ANSI_GREEN + "Duration: " + ANSI_RESET + getDuration());
         System.out.println(ANSI_GREEN + "Number of Questions: " + ANSI_RESET + getNoQuestions());
-//        This part of the system brief doesn't make sense. This shouldn't be in the Multiple Choice class.
+        // This part of the system brief doesn't make sense. This shouldn't be in the Multiple Choice class.
         System.out.println(ANSI_GREEN + "Correct Answers: " + ANSI_RESET + getCorrectAnswers());
         System.out.println(ANSI_GREEN + "Calculated Score: " + ANSI_RESET + calculateScore() + "%");
         System.out.println("----------------------------------------------\n");
     }
 
     // Getters
-
-//    This part of the system brief doesn't make sense. This shouldn't be in the Multiple Choice class.
+    // This part of the system brief doesn't make sense. This shouldn't be in the Multiple Choice class.
     public int getCorrectAnswers() {
         return correctAnswers;
     }
@@ -47,7 +46,7 @@ public class MultipleChoice extends Exam implements Scorable{
     }
 
     // Setters
-//    This part of the system brief doesn't make sense. This shouldn't be in the Multiple Choice class.
+    // This part of the system brief doesn't make sense. This shouldn't be in the Multiple Choice class.
     public void setCorrectAnswers(int correctAnswers) throws ExamException {
         if (correctAnswers < 0) {
             throw new ExamException("Correct answers must be greater than or equal to zero.");

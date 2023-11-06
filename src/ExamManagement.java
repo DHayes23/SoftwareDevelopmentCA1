@@ -411,6 +411,7 @@ private static void addStudentSubMenu() {
             scanner.nextLine();
         }
     }
+
     // Checks new exam ids against existing to prevent duplicates.
     private static boolean doesExamExist(int examId) {
         for (Exam exam : examList) {
@@ -432,5 +433,4 @@ private static void addStudentSubMenu() {
             exam.displayExamDetails();
         }
     }
-
 }
