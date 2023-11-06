@@ -63,7 +63,7 @@ public class ExamManagement {
                 case 2:
                     // List All Students
                     System.out.println(ANSI_CYAN + "-- List All Students --\n" + ANSI_RESET);
-                    System.out.println("----------------------------------------------");
+                    System.out.println("----------------------------------------------\n");
                     listAllStudents();
                     break;
                 case 3:
