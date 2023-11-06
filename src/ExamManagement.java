@@ -320,7 +320,7 @@ private static void addStudentSubMenu() {
             // Add the new essay object to the list of exams.
             examList.add(newEssay);
             // Prints success message.
-            System.out.println(ANSI_BLUE + "Essay Exam created successfully!\n" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "\nEssay Exam created successfully!\n" + ANSI_RESET);
             newEssay.displayExamDetails();
 
         } catch (ExamException e) {

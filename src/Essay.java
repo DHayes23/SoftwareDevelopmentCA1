@@ -12,6 +12,19 @@ public class Essay extends Exam implements Scorable {
         this.content = content;
     }
 
+    public int gradeEssay() {
+        // Assumes that grammar and content are already scores out of 100 - Will need to validate later!!
+        int grammarScore = grammar; // 20% of total score
+        int contentScore = content; // 70% of total score
+        int lengthScore = (countWords(essayAnswer) <= wordLimit) ? 100 : 0; // 10% of total score. Doesn't account for essays being far short of the limit.
+
+        // Calculate final score based on weighting.
+        double finalScore = (grammarScore * 0.2) + (contentScore * 0.7) + (lengthScore * 0.1);
+
+        // Round to nearest whole number for final score
+        return (int) Math.round(finalScore);
+    }
+
     private int countWords(String text) {
         // Counts words in essay.
         if (text == null || text.isEmpty()) {
@@ -23,16 +36,7 @@ public class Essay extends Exam implements Scorable {
 
     @Override
     public int calculateScore() {
-        // Assumes that grammar and content are already scores out of 100 - Will need to validate later!!
-        int grammarScore = grammar; // 20% of total score
-        int contentScore = content; // 70% of total score
-        int lengthScore = (countWords(essayAnswer) <= wordLimit) ? 100 : 0; // 10% of total score. Doesn't account for essays being far short of the limit.
-
-        // Calculate final score based on weighting.
-        double finalScore = (grammarScore * 0.2) + (contentScore * 0.7) + (lengthScore * 0.1);
-
-        // Round to nearest whole number for final score
-        return (int) Math.round(finalScore);
+        return gradeEssay();
     }
 
     public void displayExamDetails() {
